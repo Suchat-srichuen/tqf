@@ -1,0 +1,725 @@
+<?php
+
+/**
+ * @file curriculum.module
+ * TODO: Enter file description here.
+ */
+
+
+/***********************
+* Implements hook_menu *
+***********************/
+function curriculum_menu() {
+    // This is the minimum information you can provide for a menu item.
+    $items['curriculum'] = array(
+        'title' => 'หลักสูตร',
+        'description' => 'หลักสูตร',
+        'page callback' => 'curriculum_page',
+        'access callback' => 'curriculum_page_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['subject'] = array(
+        'title' => 'รายวิชา',
+        'description' => 'รายวิชา',
+        'page callback' => 'curriculum_subjects_page',
+        'access callback' => 'curriculum_subjects_page_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/add-subjects-category'] = array(
+        'title' => 'เพิ่มหมวดวิชา',
+        'description' => 'เพิ่มหมวดวิชา',
+        'page callback' => 'curriculum_add_subjects_category',
+        'access callback' => 'curriculum_add_subjects_category_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_LOCAL_TASK,
+        'weight' => 5
+    );
+
+    $items['node/%node/add-subjects-group'] = array(
+        'title' => 'เพิ่มกลุ่มวิชา',
+        'description' => 'เพิ่มกลุ่มวิชา',
+        'page callback' => 'curriculum_add_subjects_group',
+        'access callback' => 'curriculum_add_subjects_group_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/add-sub-subjects-group'] = array(
+        'title' => 'เพิ่มกลุ่มวิชาย่อย',
+        'description' => 'เพิ่มกลุ่มวิชาย่อย',
+        'page callback' => 'curriculum_add_sub_subjects_group',
+        'access callback' => 'curriculum_add_sub_subjects_group_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/add-subject-property'] = array(
+        'title' => 'เพิ่มคุณสมบัติรายวิชา',
+        'description' => 'เพิ่มคุณสมบัติรายวิชา',
+        'page callback' => 'curriculum_add_subject_property',
+        'access callback' => 'curriculum_add_subject_property_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/concerned-subjects'] = array(
+        'title' => 'รายวิชาที่เกี่ยวข้อง',
+        'description' => 'รายวิชาที่เกี่ยวข้อง',
+        'page callback' => 'curriculum_concerned_subjects',
+        'access callback' => 'curriculum_concerned_subjects_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['add-curriculum'] = array(
+        'title' => 'เพิ่มหลักสูตร',
+        'description' => 'เพิ่มหลักสูตร',
+        'page callback' => 'curriculum_add_curriculum',
+        'access callback' => 'curriculum_add_curriculum_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['add-subjects'] = array(
+        'title' => 'เพิ่มรายวิชา',
+        'description' => 'เพิ่มรายวิชา',
+        'page callback' => 'curriculum_add_subjects',
+        'access callback' => 'curriculum_add_subject_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/edit-subjects-group'] = array(
+        'title' => 'แก้ไขวิชา',
+        'description' => 'แก้ไขวิชา',
+        'page callback' => 'curriculum_edit_subjects_group',
+        'access callback' => 'curriculum_edit_subjects_group_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['check-subject'] = array(
+        'title' => 'ตรวจสอบการซ้ำของรายวิชา',
+        'description' => 'ตรวจสอบการซ้ำของรายวิชา',
+        'page callback' => 'curriculum_check_subject',
+        'access callback' => 'curriculum_check_subject_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['updata-subject'] = array(
+        'title' => 'updata ชื่อรายวิชา',
+        'description' => 'updata ชื่อรายวิชา',
+        'page callback' => 'curriculum_updata_subject',
+        'access callback' => 'curriculum_updata_subject_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/add-open-subject'] = array(
+        'title' => 'เปิดรายวิชา',
+        'description' => 'เปิดรายวิชา',
+        'page callback' => 'curriculum_add_open_subject',
+        'access callback' => 'curriculum_add_open_subject_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['open-subjects'] = array(
+        'title' => 'รายวิชาที่เปิดสอน',
+        'description' => 'รายวิชาที่เปิดสอน',
+        'page callback' => 'curriculum_open_subjects',
+        'access callback' => 'curriculum_open_subjects_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/add-tqf3'] = array(
+        'title' => 'เพิ่ม มคอ.3',
+        'description' => 'เพิ่ม มคอ.3',
+        'page callback' => 'curriculum_add_tqf3',
+        'access callback' => 'curriculum_add_tqf3_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/edit-tqf-3-category-5-1'] = array(
+        'title' => 'แก้ไข',
+        'description' => 'แก้ไข',
+        'page callback' => 'curriculum_edit_tqf_3_category_5_1',
+        'access callback' => 'curriculum_edit_tqf_3_category_5_1_access',
+        'access arguments' => array(1),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+  return $items;
+}
+
+/**************************
+* function create overlay *
+**************************/
+function curriculum_admin_paths_alter(&$paths){
+    $paths['node/*/concerned-subjects'] = TRUE;
+    $paths['node/*/add-open-subject'] = TRUE;
+    $paths['node/*/add-tqf3'] = TRUE;
+    $paths['node/*/edit-tqf-3-category-5-1'] = TRUE;
+
+
+}
+
+/******************
+* access callback *
+******************/
+function curriculum_edit_tqf_3_category_5_1_access($node) {
+    $access = false;
+    if (true){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_add_tqf3_access($node) {
+    $access = false;
+    if (true){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_updata_subject_access($node) {
+    $access = false;
+    if (true){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_edit_subjects_group_access($node) {
+    $access = false;
+    if (true){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_add_subject_access($node) {
+    $access = false;
+    if (true){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_add_curriculum_access($node) {
+    $access = false;
+    if (true){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_page_access($node) {
+    $access = false;
+    if (true){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_subjects_page_access($node) {
+    $access = false;
+    if (user_access('create subjects content')){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_add_subjects_category_access($node) {
+    $access = false;
+    if (($node->type == 'curriculum') && (user_access('create subjects_category content'))){
+        $access = true;
+    }
+  return $access;
+}
+
+function curriculum_add_subjects_group_access($node) {
+    $access = false;
+        if (user_access('create subjects_group content')) {
+            $access = true;
+        }
+
+    return $access;
+}
+
+function curriculum_add_sub_subjects_group_access($node) {
+    $access = false;
+        if (user_access('create sub_subjects_group content')) {
+            $access = true;
+        }
+
+    return $access;
+}
+
+function curriculum_add_subject_property_access($node) {
+    $access = false;
+        if (user_access('create subject_property content')) {
+            $access = true;
+        }
+
+    return $access;
+}
+
+function curriculum_concerned_subjects_access($node) {
+    $access = false;
+        if (true) {
+            $access = true;
+        }
+
+    return $access;
+}
+
+function curriculum_check_subject_access() {
+    $access = false;
+        if (true) {
+            $access = true;
+        }
+
+    return $access;
+}
+
+function curriculum_add_open_subject_access() {
+    $access = false;
+        if (true) {
+            $access = true;
+        }
+
+    return $access;
+}
+
+function curriculum_open_subjects_access() {
+    $access = false;
+        if (true) {
+            $access = true;
+        }
+
+    return $access;
+}
+
+/****************
+* page callback *
+****************/
+function curriculum_edit_tqf_3_category_5_1($node) {
+    $output = '';
+
+    $node_tqf_3 = node_load($node->field_tqf_3_ref['und'][0]['nid']);
+
+    $node_open_subject = node_load($node_tqf_3->field_open_subject_ref['und'][0]['nid']);
+
+    drupal_goto("node/".$node->nid."/edit", array('query'=>array('destination'=>'node/'.$node_open_subject->nid)));
+
+    return $output;
+}
+
+function curriculum_updata_subject() {
+    $output = '';
+
+    $query = db_select('node', 'a');
+    $result = $query
+                  ->fields('a', array('nid'))
+                  ->condition('a.type', 'subjects', '=')
+                  //->range(0, 100)
+                  ->execute();
+
+
+    while ($value_id = $result->fetchColumn()) {
+        $output .= $value_id.' ';
+
+        $node = node_load($value_id);
+
+        if (isset($node->field_subjects_time['und'][0]['value'])) {
+            $title_name =   $node->field_subjects_id['und'][0]['value'].' '
+                        .$node->field_subjects_name_th['und'][0]['value'].' '
+                        .t("หน่วยกิต").' '.$node->field_subjects_credit['und'][0]['value'].'('
+                        .$node->field_subjects_time['und'][0]['value'].')';
+
+            $node->title = $title_name;
+        }
+        else {
+            $title_name =   $node->field_subjects_id['und'][0]['value'].' '
+                        .$node->field_subjects_name_th['und'][0]['value'].' '
+                        .t("หน่วยกิต").' '.$node->field_subjects_credit['und'][0]['value'].'('
+                        .$node->field_subjects_theory['und'][0]['value'].'-'
+                        .$node->field_subjects_practice['und'][0]['value'].'-'
+                        .$node->field_subjects_research['und'][0]['value'].')';
+
+            $node->title = $title_name;
+        }
+
+        node_save($node);
+
+    }
+
+    return $output;
+}
+
+function curriculum_check_subject() {
+    $output = '';
+
+    $query = db_select('field_data_field_subjects_id', 'a');
+    $result = $query
+                  ->fields('a', array('field_subjects_id_value'))
+                  ->execute();
+
+    $value_1 = array();
+    $count = 0;
+    while ($value_id = $result->fetchColumn()) {
+
+        $value_1[$count] = trim($value_id);
+
+        $count++;
+    }
+
+    foreach ($value_1 as $key => $value) {
+
+        $query = db_select('field_data_field_subjects_id', 'b');
+        $result = $query
+                      ->fields('b', array('field_subjects_id_value'))
+                      ->execute();
+        $check = 0;
+        while ($value_id_2 = $result->fetchColumn()) {
+            if (trim($value_id_2) == $value) {
+                $check = $check + 1;
+            }
+        }
+
+        if ($check > 1) {
+            $output .= 'รหัสวิชา => '.$value.' มีการซ้ำ</br>';
+        }
+    }
+
+    return $output;
+}
+
+function curriculum_edit_subjects_group($node) {
+    $output = '';
+
+    $check = false;
+    if ($node->type == 'subjects_category') {
+        /*load curriculum content*/
+        $curriculum = node_load($node->field_curriculum_ref['und'][0]['nid']);
+        $check = true;
+    }
+    else if ($node->type == 'subjects_group') {
+        /*load subjects_category content*/
+        $subjects_category = node_load($node->field_subjects_category_ref['und'][0]['nid']);
+
+        /*load curriculum content*/
+        $curriculum = node_load($subjects_category->field_curriculum_ref['und'][0]['nid']);
+        $check = true;
+    }
+    else if ($node->type == 'sub_subjects_group') {
+        /*load subjects_category content*/
+        $subjects_group = node_load($node->field_subjects_group_ref['und'][0]['nid']);
+
+        /*load subjects_category content*/
+        $subjects_category = node_load($subjects_group->field_subjects_category_ref['und'][0]['nid']);
+
+        /*load curriculum content*/
+        $curriculum = node_load($subjects_category->field_curriculum_ref['und'][0]['nid']);
+        $check = true;
+    }
+    else if ($node->type == 'subject_property') {
+        /*load subjects_category content*/
+        $subjects_group = node_load($node->field_all_subject_group_ref['und'][0]['nid']);
+    }
+
+    if ($check) {
+        drupal_goto("node/".$node->nid."/edit", array('query'=>array('destination'=>'node/'.$curriculum->nid)));
+    }
+    else {
+        drupal_goto("node/".$node->nid."/edit", array('query'=>array('destination'=>'node/'.$subjects_group->nid.'/concerned-subjects')));
+    }
+
+
+
+    return $output;
+}
+
+function curriculum_add_subjects() {
+    $output = '';
+
+        drupal_goto("node/add/subjects");
+
+    return $output;
+}
+
+function curriculum_add_curriculum() {
+    $output = '';
+
+        drupal_goto("node/add/curriculum");
+
+    return $output;
+}
+
+function curriculum_page() {
+    $output = '';
+
+    if (user_access('create curriculum content')) {
+        $output .= drupal_render(drupal_get_form('curriculum_add_curriculum_form'));
+    }
+
+    $output .= views_embed_view('curriculum_page', 'default');
+    return $output;
+}
+
+function curriculum_subjects_page() {
+    $output = '';
+
+    if (user_access('create subjects content')) {
+        $output .= drupal_render(drupal_get_form('curriculum_add_subjects_form'));
+    }
+
+    $output .= views_embed_view('subject_page', 'default');
+    return $output;
+}
+
+function curriculum_add_subjects_category($node) {
+    $output = '';
+    drupal_goto("node/add/subjects-category/".$node->nid, array('query'=>array('destination'=>'node/'.$node->nid)));
+    return $output;
+}
+
+function curriculum_add_subjects_group($node) {
+    $output = '';
+
+    /*load curriculum content*/
+    $curriculum = node_load($node->field_curriculum_ref['und'][0]['nid']);
+
+    drupal_goto("node/add/subjects-group/".$node->nid, array('query'=>array('destination'=>'node/'.$curriculum->nid)));
+    return $output;
+}
+
+function curriculum_add_sub_subjects_group($node) {
+    $output = '';
+
+    /*load subjects_category content*/
+    $subjects_category = node_load($node->field_subjects_category_ref['und'][0]['nid']);
+
+    /*load curriculum content*/
+    $curriculum = node_load($subjects_category->field_curriculum_ref['und'][0]['nid']);
+
+    drupal_goto("node/add/sub-subjects-group/".$node->nid, array('query'=>array('destination'=>'node/'.$curriculum->nid)));
+    return $output;
+}
+
+function curriculum_add_subject_property($node) {
+    $output = '';
+
+    drupal_goto("node/add/subject-property/".$node->nid, array('query'=>array('destination'=>'node/'.$node->nid.'/concerned-subjects')));
+    return $output;
+}
+
+function curriculum_concerned_subjects($node) {
+    $output = '';
+    $output .= drupal_render(drupal_get_form('curriculum_concerned_subjects_form', $node->nid));
+    return $output;
+}
+
+function curriculum_show_subject($nid) {
+    $output = '';
+
+    $query = db_select('field_data_field_subjects_name_th', 'a');
+    $result = $query
+                  ->fields('a', array('field_subjects_name_th_value'))
+                  ->condition('a.entity_id', $nid, '=')
+                  ->execute();
+
+    while ($value = $result->fetchColumn()) {
+        $output .= l($value, 'node/'.$nid);
+    }
+
+    return $output;
+}
+
+function curriculum_add_open_subject($node) {
+    $output = '';
+
+    drupal_goto("node/add/open-subject/".$node->nid);
+
+    //drupal_goto("node/add/subject-property/".$node->nid, array('query'=>array('destination'=>'node/'.$node->nid.'/concerned-subjects')));
+    return $output;
+}
+
+function curriculum_open_subjects() {
+    $output = '';
+
+    $output .= views_embed_view('open_subject_list', 'default');
+    
+    return $output;
+}
+
+function curriculum_add_tqf3($node) {
+    $output = '';
+
+    drupal_goto("node/add/tqf-3/".$node->nid, array('query'=>array('destination'=>'node/'.$node->nid)));
+
+    return $output;
+}
+
+/***************
+* hook presave *
+***************/
+function curriculum_node_presave($node) {
+    if ($node->type == 'subjects_group') {
+        /*load subjects_category content*/
+        $subjects_category = node_load($node->field_subjects_category_ref['und'][0]['nid']);
+
+        /*load taxonomy*/
+        $subjects_category_number = taxonomy_term_load($subjects_category->field_subjects_category_number['und'][0]['tid']);
+        $subjects_group_number = taxonomy_term_load($node->field_subjects_group_number['und'][0]['tid']);
+        $subjects_group_name = taxonomy_term_load($node->field_subjects_group_name['und'][0]['tid']);
+
+        $node->title = $subjects_category_number->name.'.'.$subjects_group_number->name.' '.$subjects_group_name->name;
+    }
+    else if ($node->type == 'sub_subjects_group') {
+        /*load subjects_group content*/
+        $subjects_group = node_load($node->field_subjects_group_ref['und'][0]['nid']);
+
+        /*load subjects_category content*/
+        $subjects_category = node_load($subjects_group->field_subjects_category_ref['und'][0]['nid']);
+
+        /*load taxonomy*/
+        $subjects_category_number = taxonomy_term_load($subjects_category->field_subjects_category_number['und'][0]['tid']);
+        $subjects_group_number = taxonomy_term_load($subjects_group->field_subjects_group_number['und'][0]['tid']);
+        $sub_subjects_group_number = taxonomy_term_load($node->field_sub_subjects_group_number['und'][0]['tid']);
+        $sub_subjects_group_name = taxonomy_term_load($node->field_sub_subjects_group_name['und'][0]['tid']);
+
+        $node->title = $subjects_category_number->name.'.'.$subjects_group_number->name.'.'.$sub_subjects_group_number->name.' '.$sub_subjects_group_name->name;
+    }
+    else if ($node->type == 'subjects') {
+        if (isset($node->field_subjects_time['und'][0]['value'])) {
+            $title_name =   trim($node->field_subjects_id['und'][0]['value']).' '
+                        .trim($node->field_subjects_name_th['und'][0]['value']).' '
+                        .t("หน่วยกิต").' '.trim($node->field_subjects_credit['und'][0]['value']).'('
+                        .trim($node->field_subjects_time['und'][0]['value']).')';
+
+            $node->title = $title_name;
+        }
+        else {
+            $title_name =   trim($node->field_subjects_id['und'][0]['value']).' '
+                        .trim($node->field_subjects_name_th['und'][0]['value']).' '
+                        .t("หน่วยกิต").' '.trim($node->field_subjects_credit['und'][0]['value']).'('
+                        .trim($node->field_subjects_theory['und'][0]['value']).'-'
+                        .trim($node->field_subjects_practice['und'][0]['value']).'-'
+                        .trim($node->field_subjects_research['und'][0]['value']).')';
+
+            $node->title = $title_name;
+        }
+    }
+    else if ($node->type == 'open_subject') {
+        // load subjects content
+        $subjects = node_load($node->field_subject_ref['und'][0]['nid']);
+
+        $node->title = $subjects->field_subjects_name_th['und'][0]['value'];
+
+        $node->field_updata_time_open_subject['und'][0]['value'] = time();
+
+    }
+}
+
+/***************
+* function php *
+***************/
+function curriculum_open_subject($nid) {
+    $output = '';
+        // if (user_access('create subject_property content')) {
+        if (true) {
+            $output .= l(t('เปิดรายวิชา'), 'node/'.$nid.'/add-open-subject');
+        }
+    return $output;
+}
+
+function curriculum_semester_schoolyear($nid) {
+    $output = '';
+        if (true) {
+            $output .= t('ภาค / ปีการศึกษา');
+        }
+    return $output;
+}
+
+function curriculum_teacher($nid) {
+    $output = '';
+        if (true) {
+            $output .= t('อาจารย์ผู้สอน');
+        }
+    return $output;
+}
+
+/****************
+* function form *
+****************/
+function curriculum_add_subjects_form($form_state) {
+    $form = array();
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'เพิ่มรายวิชา'
+    );
+
+    return $form;
+}
+
+function curriculum_add_subjects_form_submit($form , &$form_state) {
+
+    $form_state['redirect'] = "add-subjects";
+
+}
+
+function curriculum_add_curriculum_form($form_state) {
+    $form = array();
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'เพิ่มหลักสูตร'
+    );
+
+    return $form;
+}
+
+function curriculum_add_curriculum_form_submit($form , &$form_state) {
+
+    $form_state['redirect'] = "add-curriculum";
+
+}
+
+function curriculum_concerned_subjects_form($form_state, $variables){
+    $form = array();
+    $nid = $variables['build_info']['args'][0];
+
+    $form['concerned_subjects'] = array(
+        '#type' => 'value',
+        '#value' => $nid,
+    );
+
+    return $form;
+}

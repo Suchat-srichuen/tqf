@@ -1,0 +1,316 @@
+.curriculum-page .grid-1 {
+	width: 929px!important;
+}
+
+.curriculum-page .detail {
+	background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    height: 240px;
+    padding: 15px 20px 25px 30px !important;
+
+    /*background: url("../images/first-page-bg.png") repeat scroll center top transparent;
+    border: 1px solid #F8F8F8 !important;
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 20px;
+    padding: 15px 25px 25px 20px !important;
+    width: 545px;*/
+
+
+}
+
+.curriculum-page .detail .grid-2 {
+    width: 185px;
+}
+
+.curriculum-page .detail .grid-4 {
+    width: 620px;
+}
+
+.curriculum-page .detail .grid-5 {
+    width: 5px;
+}
+
+.curriculum-page .detail .grid-3 {
+    width: 860px;
+}
+
+.curriculum-page .grid-1 .title{
+    color: #000000;
+    font-family: supermarketRegular;
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: 0;
+    margin: 30px 0 10px;
+    padding-bottom: 0;
+    padding-top: 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.curriculum-page .grid-1 .in-2{
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding-left: 40px!important;
+}
+
+.curriculum-page .grid-1 .in-3{
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.curriculum-page .grid-1 .in-4{
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding-left: 60px!important;
+}
+
+.curriculum-page .grid-1 .in-5{
+    background: none repeat scroll 0 0 #FFFFFF;
+    text-align: right;
+}
+
+.subject-detail {
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    padding: 15px 25px 25px 20px !important;
+}
+.subject-detail .grid-1 {
+    width: 580px!important;
+    margin-left: 0;
+}
+
+.subject-detail .grid-2 {
+    width: 280px!important;
+}
+
+.subject-detail .prerequisite {
+    padding-left: 40px;
+}
+
+.curriculum-structure .header-1 {
+    background: none repeat scroll 0 0 #F4F4F4;
+    font-weight: bold;
+}
+
+.curriculum-structure .header-2 {
+    background: none repeat scroll 0 0 #F4F4F4;
+}
+
+.curriculum-structure .header-3 {
+    background: none repeat scroll 0 0 #F4F4F4;
+    text-align: right;
+}
+
+#curriculum-concerned-subjects-form {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none!important;
+    padding: 0!important;
+}
+
+#curriculum-concerned-subjects-form .subjects-detail{
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    margin-bottom: 20px;
+    padding: 15px 25px 25px 20px !important;
+}
+
+#curriculum-add-curriculum-form,
+#curriculum-add-subjects-form {
+    background: none no-repeat scroll 0 0 transparent;
+    border: 0 solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    padding: 0 0 10px 800px !important;
+}
+
+.subjects-group-page .header-1 {
+    background: none repeat scroll 0 0 #E4E0E0;
+    font-weight: bold;
+}
+
+.subjects-group-page .header-2 {
+    background: none repeat scroll 0 0 #F2F2F2;
+}
+
+#curriculum-concerned-subjects-form .link-back {
+    margin-top: -20px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    padding-left: 885px;
+}
+
+.subject-back {
+    font-size: 16px;
+    margin-left: 880px;
+}
+
+.open-subject-page .grid-1 .group-1 .group-1-title,
+.open-subject-page .grid-2 .add-detail-title,
+.open-subject-page .group-2 .group-2-title,
+.open-subject-page .group-3 .group-3-title,
+.open-subject-page .group-4 .group-4-title,
+.open-subject-page .group-5 .group-5-title,
+.open-subject-page .group-6 .group-6-title,
+.open-subject-page .group-7 .group-7-title {
+    color: #000000;
+    font-family: supermarketRegular;
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 1.3em;
+    margin: 0 0 10px;
+    padding-bottom: 0;
+    padding-top: 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.open-subject-page .grid-1 .group-1 .sub-group-title,
+.open-subject-page .group-2 .group-sub-title,
+.open-subject-page .group-3 .group-sub-title,
+.open-subject-page .group-4 .group-sub-title,
+.open-subject-page .group-5 .group-sub-title,
+.open-subject-page .group-6 .group-sub-title,
+.open-subject-page .group-7 .group-sub-title {
+    font-weight: bold !important;
+}
+
+.open-subject-page .grid-1,
+.open-subject-page .group-2,
+.open-subject-page .group-3,
+.open-subject-page .group-4,
+.open-subject-page .group-5,
+.open-subject-page .group-6,
+.open-subject-page .group-7 {
+    margin-bottom: 20px;
+}
+
+.open-subject-page .grid-1 .group-1 .group-1-data {
+    margin-left: 40px;
+}
+
+.open-subject-page .grid-1 {
+    width: 550px !important;
+}
+
+.open-subject-page .grid-2 {
+    width: 350px !important;
+}
+
+.open-subject-page .grid-2 .add-link-all {
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    padding: 15px 25px 25px 20px !important;
+}
+
+.views-field-field-aim-subject .item-list li,
+.views-field-field-aim-develop .item-list li {
+    list-style: decimal outside none;
+    margin-left: 55px;
+}
+
+.views-label-field-learning,
+.views-label-field-teaching-methods,
+.views-label-field-evaluation-methods {
+    font-weight: bold !important;
+    margin-left: 55px;
+}
+
+.views-field-field-learning .item-list li,
+.views-field-field-teaching-methods .item-list li,
+.views-field-field-evaluation-methods .item-list li {
+    list-style: disc outside none;
+    margin-left: 100px;
+}
+
+.views-field-field-main-book .item-list li,
+.views-field-field-archives .item-list li,
+.views-field-field-document .item-list li {
+    margin-left: 40px;
+}
+
+.open-subject-page .table-5-1 {
+    margin-top: 20px;
+}
+
+.open-subject-page .group-5 .header-1,
+.open-subject-page .group-5 .v-1 {
+    border-right: 1px solid #CCCCCC;
+    text-align: center;
+    width: 50px;
+}
+
+.open-subject-page .group-5 .header-2 {
+    border-right: 1px solid #CCCCCC;
+    text-align: center;
+    width: 170px;
+}
+
+.open-subject-page .group-5 .v-2 {
+    border-right: 1px solid #CCCCCC;
+    width: 170px;
+}
+
+.open-subject-page .group-5 .header-3,
+.open-subject-page .group-5 .v-3 {
+    border-right: 1px solid #CCCCCC;
+    text-align: center;
+    width: 65px;
+}
+
+.open-subject-page .group-5 .header-4 {
+    border-right: 1px solid #CCCCCC;
+    text-align: center;
+}
+
+.open-subject-page .group-5 .v-4 {
+    border-right: 1px solid #CCCCCC;
+}
+
+.open-subject-page .group-5 .header-5 {
+    text-align: center;
+    width: 170px;
+}
+
+.open-subject-page .group-5 .header-6,
+.open-subject-page .group-5 .v-6 {
+    border-right: 1px solid #CCCCCC;
+    text-align: center;
+    width: 20px;
+}
+
+.open-subject-page .group-5 .v-7 {
+    text-align: center;
+}
+
+.view-tqf-3-category-5-2 {
+    margin-top: 20px;
+}
+
+.view-tqf-3-category-5-2 thead .views-field-field-learning-5-2,
+.view-tqf-3-category-5-2 thead .views-field-field-evaluation-methods-5-2,
+.view-tqf-3-category-5-2 thead .views-field-field-week-assessment,
+.view-tqf-3-category-5-2 .odd .views-field-field-week-assessment,
+.view-tqf-3-category-5-2 .even .views-field-field-week-assessment {
+    border-right: 1px solid #CCCCCC;
+}
+
+.view-tqf-3-category-5-2 .odd .views-field-field-learning-5-2,
+.view-tqf-3-category-5-2 .even .views-field-field-learning-5-2,
+.view-tqf-3-category-5-2 .odd .views-field-field-evaluation-methods-5-2,
+.view-tqf-3-category-5-2 .even .views-field-field-evaluation-methods-5-2 {
+    border-right: 1px solid #CCCCCC;
+    text-align: left;
+}
+
+.view-tqf-3-category-3-2 {
+    margin-top: 20px;
+}
+
+.view-tqf-3-category-3-2 thead .views-field-field-describe,
+.view-tqf-3-category-3-2 thead .views-field-field-teaching,
+.view-tqf-3-category-3-2 thead .views-field-field-apprentice,
+.view-tqf-3-category-3-2 .odd .views-field-field-describe,
+.view-tqf-3-category-3-2 .odd .views-field-field-teaching,
+.view-tqf-3-category-3-2 .odd .views-field-field-apprentice {
+    border-right: 1px solid #CCCCCC;
+}
+

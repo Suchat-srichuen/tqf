@@ -1,0 +1,13 @@
+<?php
+function hide_sidebar_help($path, $arg) {
+	switch ($path) {
+		case 'curriculum':
+		case 'curriculum-page':
+		case 'subject':
+		case 'subject-page':
+		case 'node/*/detail-subject':
+		case 'open-subjects':
+			drupal_add_css(drupal_get_path('theme', 'omega').'/custom/hide-sidebar.css');
+			break;
+	}
+}

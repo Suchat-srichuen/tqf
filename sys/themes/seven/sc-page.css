@@ -1,0 +1,148 @@
+.curriculum-page .grid-1 {
+	width: 929px!important;
+}
+
+.curriculum-page .detail {
+	background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    height: 240px;
+    padding: 15px 20px 25px 30px !important;
+
+    /*background: url("../images/first-page-bg.png") repeat scroll center top transparent;
+    border: 1px solid #F8F8F8 !important;
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 20px;
+    padding: 15px 25px 25px 20px !important;
+    width: 545px;*/
+
+
+}
+
+.curriculum-page .detail .grid-2 {
+    width: 185px;
+}
+
+.curriculum-page .detail .grid-4 {
+    width: 620px;
+}
+
+.curriculum-page .detail .grid-5 {
+    width: 5px;
+}
+
+.curriculum-page .detail .grid-3 {
+    width: 860px;
+}
+
+.curriculum-page .grid-1 .title{
+    color: #000000;
+    font-family: supermarketRegular;
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: 0;
+    margin: 30px 0 10px;
+    padding-bottom: 0;
+    padding-top: 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.curriculum-page .grid-1 .in-2{
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding-left: 40px!important;
+}
+
+.curriculum-page .grid-1 .in-3{
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.curriculum-page .grid-1 .in-4{
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding-left: 60px!important;
+}
+
+.curriculum-page .grid-1 .in-5{
+    background: none repeat scroll 0 0 #FFFFFF;
+    text-align: right;
+}
+
+.subject-detail {
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    padding: 15px 25px 25px 20px !important;
+}
+.subject-detail .grid-1 {
+    width: 580px!important;
+    margin-left: 0;
+}
+
+.subject-detail .grid-2 {
+    width: 280px!important;
+}
+
+.subject-detail .prerequisite {
+    padding-left: 40px;
+}
+
+.curriculum-structure .header-1 {
+    background: none repeat scroll 0 0 #F4F4F4;
+    font-weight: bold;
+}
+
+.curriculum-structure .header-2 {
+    background: none repeat scroll 0 0 #F4F4F4;
+}
+
+.curriculum-structure .header-3 {
+    background: none repeat scroll 0 0 #F4F4F4;
+    text-align: right;
+}
+
+#curriculum-concerned-subjects-form {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none!important;
+    padding: 0!important;
+}
+
+#curriculum-concerned-subjects-form .subjects-detail{
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    margin-bottom: 20px;
+    padding: 15px 25px 25px 20px !important;
+}
+
+#curriculum-add-curriculum-form,
+#curriculum-add-subjects-form {
+    background: none no-repeat scroll 0 0 transparent;
+    border: 0 solid #F0F0F0 !important;
+    border-radius: 5px 5px 5px 5px;
+    padding: 0 0 10px 800px !important;
+}
+
+.subjects-group-page .header-1 {
+    background: none repeat scroll 0 0 #E4E0E0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.subjects-group-page .header-3 {
+    background: none repeat scroll 0 0 #E4E0E0;
+    font-weight: bold;
+}
+
+.subjects-group-page .header-2 {
+    background: none repeat scroll 0 0 #F2F2F2;
+}
+
+.subjects-group-page .row-1 {
+    text-align: center;
+}
+
+#curriculum-concerned-subjects-form .link-back {
+    margin-top: -20px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    padding-left: 885px;
+}

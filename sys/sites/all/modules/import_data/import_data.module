@@ -1,0 +1,209 @@
+<?php
+/**
+ * @file import_data.module
+ * TODO: Enter file description here.
+ */
+define('HRMS', 'http://www.hrms.sskru.ac.th/sys');
+
+/**
+ * Implements hook_menu().
+ */
+function import_data_menu() {
+    // This is the minimum information you can provide for a menu item.
+    $items['services/get/user'] = array(
+        'title' => 'Get Person From HRMS Server',
+        'page callback' => 'import_data_service_get_persons',
+        'access callback' => 'import_data_service_get_persons_access',
+    );
+
+    return $items;
+}
+
+/******************
+* function access *
+******************/
+function import_data_service_get_persons_access() {
+    $access = true;
+    return $access;
+}
+
+
+/********************
+* function callback *
+********************/
+function import_data_service_get_persons() {
+    $output = '';
+
+    /*Set params*/
+    $params = array(
+            'all' => 'true',
+        );
+
+    /*Set endpoint*/
+    $endpoint  = HRMS.'/get/user/all';
+    $endpoint .= "?".import_data_service_pack_params($params);
+
+    $result = file_get_contents($endpoint);
+
+    /*convert to array*/
+    $profile_list_obj = drupal_json_decode($result);
+
+    /*upload profile*/
+    $output .= import_data_service_upload_user_profile($profile_list_obj);
+
+    $output .= "Already Get Users";
+
+    return $output;
+}
+
+/**
+ * Update Persons Profile
+ */
+function import_data_service_upload_user_profile($profiles) {
+    $output = "";
+    global $user;
+
+    // foreach ($profiles as $pid => $profile) {
+    //     $output .= '<div>
+    //                     '.$profile['profile_id'].'
+    //                     '.$profile['firstname_th'].'
+    //                     '.$profile['lastname_th'].'
+    //                     '.$profile['firstname_en'].'
+    //                     '.$profile['lastname_en'].'
+    //                     '.$profile['username'].'
+    //                     '.$profile['password'].'
+    //                     '.$profile['position'].'
+    //                     '.$profile['faculty'].'
+    //                     '.$profile['department'].'
+    //                 </div>';
+    // }
+
+    foreach ($profiles as $pid => $profile) {
+        // $nid = 0;
+        // $nid = db_select('field_data_field_profile_id', 'p')
+        //         ->fields('p', array('entity_id'))
+        //         ->condition('p.field_profile_id_value', $profile['profile_id'], '=')
+        //         ->execute()
+        //         ->fetchColumn();
+
+        // if (!$nid) {
+        //     $node = new stdClass();
+        //     $node->type  = 'personal_profile';
+        //     $node->title = $profile['firstname_th']." ".$profile['lastname_th'];
+
+        //     $node->language   = LANGUAGE_NONE;
+        //     $node->uid        = 1;
+        //     $node->created    = time();
+        //     $node->changed    = $node->created;
+        //     $node->status     = 1;
+        //     $node->promote    = 0;
+        //     $node->sticky     = 0;
+        //     $node->format     = 0;
+        //     $node->revision   = 1;
+        //     $node->log        = t('Node saved: '.$node->title);
+        // }
+        // else {
+        //     $node = node_load($nid);
+        // }
+
+        // $node->field_profile_id['und'][0]['value'] = $profile['profile_id'];
+        // $node->field_name_th['und'][0]['value'] = $profile['firstname_th'];
+        // $node->field_lastname_th['und'][0]['value'] = $profile['lastname_th'];
+        // $node->field_name_en['und'][0]['value'] = $profile['firstname_en'];
+        // $node->field_lastname_en['und'][0]['value'] = $profile['lastname_en'];
+        // $node->field_work_postion['und'][0]['tid'] = custom_taxonomy_get_by_name($profile['position'], 12);
+
+        // if ($profile['faculty'] != "") {
+        //     $faculty_tid = custom_taxonomy_get_by_name($profile['faculty'], 16);
+        //     $department_tid = custom_taxonomy_get_by_name($profile['department'], 16, $faculty_tid);
+
+        //     $node->field_faculty['und'][0]['tid'] = $department_tid;
+        // }
+
+
+
+        $uid = 0;
+        $uid = import_data_create_account_student_profile($profile['username'], $profile['password']);
+
+        // $node->uid = $uid;
+        
+        // node_save($node);
+
+            $num_updated = db_update('users')
+                                ->fields(array(
+                                    'pass' => $profile['password'],
+                                            )
+                                        )
+                                ->condition('uid', $uid, '=')
+                                ->execute();
+
+    }
+
+    return $output;
+}
+
+
+/***********
+* function *
+***********/
+function import_data_create_account_student_profile($account_name, $password){
+    /*get lastest uid*/
+    $lastest_uid = db_select('users', 'u')
+                    ->fields('u', array('uid'))
+                    ->range(0, 1)
+                    ->orderBy('uid', 'DESC')
+                    ->execute()
+                    ->fetchColumn();
+    $current_uid = intval($lastest_uid) + 1;
+
+    /*check duplicate account name*/
+    $check_account = 0;
+    $check_account = db_select('users', 'u')
+                        ->fields('u', array('uid'))
+                        ->condition('name', $account_name, '=')
+                        ->execute()
+                        ->fetchColumn();
+
+    /*if account dose not exist*/
+    if (!$check_account && $account_name != "") {
+        /*set email*/
+        $mail = "personal-".$current_uid."@sskru.ac.th";
+
+        $roles = array(5 => 'personal');
+
+        /**
+         * Set User Value
+         */
+        $active = 1;
+
+        $account = array(
+                    'name' => $account_name,
+                    'pass' => $password,
+                    'mail' => $mail,
+                    'init' => $mail,
+                    'status' => $active,
+                    'roles' => $roles,
+            );
+
+        $new_user = user_save(NULL, $account, $category = 'account');
+
+        return $new_user->uid;
+    }
+    else {
+        return $check_account;
+    }
+
+}
+
+function import_data_service_pack_params($params) {
+    $str = '';
+    foreach ($params as $key => $value) {
+        $str .= $key."=".$value;
+    }
+    return $str;
+}
+
+function import_data_page(){
+    $output = '';
+    return $output;
+}

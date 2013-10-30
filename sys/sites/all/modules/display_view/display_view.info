@@ -1,0 +1,4 @@
+name = display_view
+description = TODO: Description of module
+package = Suchat
+core = 7.x

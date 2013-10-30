@@ -1,0 +1,714 @@
+<?php
+
+/**
+ * @file display_view.module
+ * TODO: Enter file description here.
+ */
+
+
+/***********************
+* Implements hook_view *
+***********************/
+function display_view_node_view($node, $view_mode, $langcode) {
+
+    if ($node->type == 'curriculum') {
+        $node->content['curriculum_content'] = array(
+            '#value' => display_view_curriculum_page($node),
+        );
+    }
+    else if ($node->type == 'subjects') {
+        $node->content['subjects_content'] = array(
+            '#value' => display_view_subjects_page($node),
+        );
+    }
+    else if ($node->type == 'open_subject') {
+        $node->content['open_subject_content'] = array(
+            '#value' => display_view_open_subject_page($node),
+        );
+    }
+
+}
+
+/*********************
+* function node view *
+*********************/
+function display_view_curriculum_page($node) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/custom/hide-sidebar.css');
+    $output = '';
+
+    $output .= '<div class="curriculum-page">
+                    <div class="detail">
+                        <div class="grid-3">'.t("รหัสหลักสูตร ").' : '.$node->field_curriculum_id['und'][0]['value'].'</div>
+                        <div class="grid-2">'.t("ชื่อหลักสูตร (ภาษาไทย)").'</div>
+                        <div class="grid-5"> : </div>
+                        <div class="grid-4">'.$node->field_curriculum_name_th['und'][0]['value'].'</div>
+                        <div class="grid-2">'.t("ชื่อหลักสูตร (ภาษาอังกฤษ)").'</div>
+                        <div class="grid-5"> : </div>
+                        <div class="grid-4">'.$node->field_curriculum_name_en['und'][0]['value'].'</div>
+                        <div class="grid-2">'.t("ชื่อปริญญาเต็ม (ภาษาไทย)").'</div>
+                        <div class="grid-5"> : </div>
+                        <div class="grid-4">'.$node->field_degree_full_name_th['und'][0]['value'].'</div>
+                        <div class="grid-2">'.t("ชื่อปริญญาเต็ม (ภาษาอังกฤษ)").'</div>
+                        <div class="grid-5"> : </div>
+                        <div class="grid-4">'.$node->field_degree_full_name_en['und'][0]['value'].'</div>
+                        <div class="grid-2">'.t("ชื่อปริญญาย่อ (ภาษาไทย)").'</div>
+                        <div class="grid-5"> : </div>
+                        <div class="grid-4">'.$node->field_degree_sub_name_th['und'][0]['value'].'</div>
+                        <div class="grid-2">'.t("ชื่อปริญญาย่อ (ภาษาอังกฤษ)").'</div>
+                        <div class="grid-5"> : </div>
+                        <div class="grid-4">'.$node->field_degree_sub_name_en['und'][0]['value'].'</div>
+                        <div class="grid-3">'.t("จำนวนหน่วยกิตที่เรียนตลอดหลักสูตร ").' '.$node->field_curriculum_sum_unit['und'][0]['value'].' '.t("หน่วยกิต").'</div>
+                        <div class="grid-3">'.t("หลักสูตรปรับปรุง พ.ศ. ").''.thai_time_format($node->field_curriculum_improvement['und'][0]['value'], 'Y').'</div>
+                    </div>
+                    <div class="grid-1">
+                        <div class="title">'.t("โครงสร้างของหลักสูตร").'</div>
+                        '.display_view_curriculum_page_form($node->nid).'
+                    </div>
+
+                </div>';
+
+    return $output;
+}
+
+function display_view_subjects_page($node) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/custom/hide-sidebar.css');
+    $output = '';
+
+    $des = '';
+    $des2 = '';
+    if (!empty($_REQUEST)) {
+        $des = $_GET['des'];
+        $des2 = $_GET['des2'];
+
+    }
+
+    //drupal_set_message($des2['destination']);
+
+    $node_curriculum = node_load($des);
+
+    drupal_set_title($node->field_subjects_name_th['und'][0]['value']);
+
+    if (isset($node->field_subjects_time['und'][0]['value'])) {
+        if (!$des2 == '') {
+            $output .= '<div class="subject-back">'.l(t("กลับ"), $des2['destination']).'</div>';
+        }
+
+        $output .= '<div class="subject-detail">
+                    <div>';
+
+        if (!$des == '') {
+            $output .= '<div><b>'.l($node_curriculum->field_curriculum_name_th['und'][0]['value'], 'node/'.$node_curriculum->nid).'</b></div>';
+        }
+
+        $output .= '    <div class="grid-1"><b>'.t("รหัสวิชา : ").'</b> '.$node->field_subjects_id['und'][0]['value'].'</div>
+                        <div class="grid-2"><b>'.t("หน่วยกิต(ชั่วโมงปฏิบัติ) : ").'</b>
+                            '.$node->field_subjects_credit['und'][0]['value'].'
+                            ('.$node->field_subjects_time['und'][0]['value'].')
+                        </div>
+                    </div>
+                    <div><b>'.t("ชื่อรายวิชา (ภาษาไทย) : ").'</b> '.$node->field_subjects_name_th['und'][0]['value'].'</div>
+                    <div><b>'.t("ชื่อรายวิชา (ภาษาอังกฤษ) : ").'</b> '.$node->field_subjects_name_en['und'][0]['value'].'</div>
+
+                    <div>'.display_form_prerequisite_list($node->nid).'</div>
+                </div>';
+    }
+    else {
+        $subjects_credit = '';
+        if (isset($node->field_subjects_credit['und'])) {
+            $subjects_credit = $node->field_subjects_credit['und'][0]['value'];
+        }
+        $subjects_theory = '';
+        if (isset($node->field_subjects_theory['und'])) {
+            $subjects_theory =  $node->field_subjects_theory['und'][0]['value'];
+        }
+        $subjects_practice = '';
+        if (isset($node->field_subjects_practice['und'])) {
+            $subjects_practice = $node->field_subjects_practice['und'][0]['value'];
+        }
+        $subjects_research = '';
+        if (isset($node->field_subjects_research['und'])) {
+            $subjects_research = $node->field_subjects_research['und'][0]['value'];
+        }
+
+        if (!$des2 == '') {
+            $output .= '<div class="subject-back">'.l(t("กลับ"), $des2['destination']).'</div>';
+        }
+
+        $output .= '<div class="subject-detail">
+                    <div>';
+
+        if (!$des == '') {
+            $output .= '<div><b>'.l($node_curriculum->field_curriculum_name_th['und'][0]['value'], 'node/'.$node_curriculum->nid).'</b></div>';
+        }
+
+        $output .= '    <div class="grid-1"><b>'.t("รหัสวิชา : ").'</b> '.$node->field_subjects_id['und'][0]['value'].'</div>
+                        <div class="grid-2"><b>'.t("หน่วยกิต(ทฤษฎี-ปฏิบัติ-ค้นคว้า) : ").'</b>
+                            '.$subjects_credit.' ('.$subjects_theory.' - '.$subjects_practice.' - '.$subjects_research.')
+                        </div>
+                    </div>
+                    <div><b>'.t("ชื่อรายวิชา (ภาษาไทย) : ").'</b> '.$node->field_subjects_name_th['und'][0]['value'].'</div>
+                    <div><b>'.t("ชื่อรายวิชา (ภาษาอังกฤษ) : ").'</b> '.$node->field_subjects_name_en['und'][0]['value'].'</div>
+
+                    <div>'.display_form_prerequisite_list($node->nid).'</div>
+                </div>';
+    }
+
+    $output .=  '<div class="citeria-content">
+                    <div class="title">'.t("คำอธิบายรายวิชา (ภาษาไทย)").'</div>
+                    '.drupal_render($node->content['field_subjects_explanation_th']).'
+                </div>';
+
+    $output .=  '<div class="citeria-content">
+                    <div class="title">'.t("คำอธิบายรายวิชา (ภาษาอังกฤษ)").'</div>
+                    '.drupal_render($node->content['field_subjects_explanation_en']).'
+                </div>';
+    if(isset($node->field_subjects_explanation_other['und'][0]['value'])) {
+    $output .= '<div class="citeria-content">
+		    <div class="title">'.t("คำอธิบายรายวิชา (ภาษาอื่นๆ)").'</div>
+		    '.drupal_render($node->content['field_subjects_explanation_other']).'
+	   	</div>';
+    }
+
+    return $output;
+}
+
+function display_view_open_subject_page($node) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/custom/hide-sidebar.css');
+    $output = '';
+
+    $query = db_select('field_data_field_open_subject_ref', 'i');
+    $result = $query
+                ->fields('i', array('entity_id'))
+                ->condition('i.field_open_subject_ref_nid', $node->nid, '=')
+                ->condition('i.bundle', 'tqf_3', '=')
+                ->execute();
+
+    $nid_tqf_3 = null;
+    while ($entity_id = $result->fetchColumn()) {
+        $nid_tqf_3 .= $entity_id;
+    }
+
+    if (!isset($nid_tqf_3)) {
+        $output .= drupal_render(drupal_get_form('display_view_addopen_subject_form', $node->nid));
+    }
+    
+
+    $curriculum = node_load($node->field_curriculum_ref['und'][0]['nid']);
+    $subject = node_load($node->field_subject_ref['und'][0]['nid']);
+
+    $prerequisite = '';
+    if (isset($subject->field_prerequisite_ref['und'])) {
+        $prerequisite = node_load($subject->field_prerequisite_ref['und'][0]['nid']);
+    }
+
+    $credit = '';
+    if (isset($subject->field_subjects_time['und'])) {
+        $credit = $subject->field_subjects_time['und'][0]['value'].' ('.$subject->field_subjects_time['und'][0]['value'].')';
+    }
+    else {
+        $credit = $subject->field_subjects_credit['und'][0]['value'].' ('.$subject->field_subjects_theory['und'][0]['value'].' - '.$subject->field_subjects_practice['und'][0]['value'].' - '.$subject->field_subjects_research['und'][0]['value'].')';
+    }
+    
+    
+
+    $output .= '<div class="open-subject-page">
+                    <div class="grid-1">
+                        <div class="group-1">
+                            <div class="group-1-title">'.t("หมวดที่ 1. ข้อมูลทั่วไป").'</div>
+                            <div class="sub-group-title">'.t("รหัสวิชาและชื่อวิชา").'</div>
+                            <div class="group-1-data">'.$subject->field_subjects_id['und'][0]['value'].' '.$subject->field_subjects_name_th['und'][0]['value'].' ( '.$subject->field_subjects_name_en['und'][0]['value'].' )</div>
+                            <div class="sub-group-title">'.t("จำนวนหน่วยกิต").'</div>
+                            <div class="group-1-data">'.$credit.'</div>
+                            <div class="sub-group-title">'.t("หลักสูตรและประเภทของรายวิชา").'</div>
+                            <div class="group-1-data">'.$curriculum->title.'</div>
+                            <div class="sub-group-title">'.t("อาจารย์ผู้รับผิดชอบรายวิชา / อาจารย์ผู้สอน").'</div>
+                            <div class="group-1-data"></div>
+                            <div class="sub-group-title">'.t("ภาคการศึกษา").'</div>
+                            <div class="group-1-data">'.taxonomy_term_load($node->field_semester['und'][0]['tid'])->name.' / '.taxonomy_term_load($node->field_school_year['und'][0]['tid'])->name.' '.t("ชั้นปีที่").' '.taxonomy_term_load($node->field_class['und'][0]['tid'])->name.'</div>
+                            <div class="sub-group-title">'.t("รายวิชาที่ต้องเรียนมาก่อน").'</div>
+                            <div class="group-1-data">'.$prerequisite->field_subjects_name_th['und'][0]['value'].'</div>
+                            <div class="sub-group-title">'.t("รายวิชาที่ต้องเรียนพร้อมกัน").'</div>
+                            <div class="group-1-data"></div>
+                            <div class="sub-group-title">'.t("ระดับผู้เรียน").'</div>
+                            <div class="group-1-data">'.taxonomy_term_load($node->field_level['und'][0]['tid'])->name.'</div>
+                            <div class="sub-group-title">'.t("สถานที่เรียน").'</div>
+                            <div class="group-1-data">'.taxonomy_term_load($node->field_study_locations['und'][0]['tid'])->name.'</div>
+                            <div class="sub-group-title">'.t("วันที่ทำหรือปรับปรุงรายละเอียดของรายวิชาครั้งล่าสุด").'</div>
+                            <div class="group-1-data">'.thai_time_format($node->field_updata_time_open_subject['und'][0]['value'], 'd-F-Y', 0).'</div>
+                        </div>
+                        
+                    </div>
+                    <div class="grid-2">
+                        <div class="add-link-all">'.display_form_add_detail_tqf_3($nid_tqf_3, $node->nid).'</div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="group-2">
+                        <div class="group-2-title">'.t("หมวดที่ 2. จุดมุ่งหมายและวัตถุประสงค์").'</div>
+                        <div class="">'.display_form_show_tqf_3_category(2, 1, '1. จุดมุ่งหมายของรายวิชา', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(2, 2, '2. วัตถุประสงค์ในการพัฒนา / ปรับปรุงรายวิชา', $nid_tqf_3).'</div>
+                    </div>
+                    <div class="group-3">
+                        <div class="group-3-title">'.t("หมวดที่ 3. ลักษณะและการดำเนินการ").'</div>
+                        <div class="">'.display_form_show_tqf_3_category(3, 1, '1. คำอธิบายรายวิชา', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(3, 2, '2. จำนวนชั่วโมงที่ใช้ต่อภาคการศึกษา', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(3, 3, '3. จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษาและแนะนำทางวิชาการแก่นักศึกษาเป็นรายบุคคล', $nid_tqf_3).'</div>
+                    </div>
+                    <div class="group-4">
+                        <div class="group-4-title">'.t("หมวดที่ 4. ลักษณะและการดำเนินการ").'</div>
+                        <div class="">'.display_form_show_tqf_3_category(4, 1, '1. คุณธรรมจริยธรรม', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(4, 2, '2. ความรู้', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(4, 3, '3. ทักษะทางปัญญา', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(4, 4, '4. ทักษะความสัมพันธ์ระหว่างบุคคลและความรับผิดชอบ', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(4, 5, '5. ทักษะการวิเคราะห์เชิงตัวเลข การสื่อสาร และการใช้เทคโนโลยีสารสนเทศ', $nid_tqf_3).'</div>
+                    </div>
+                    <div class="group-5">
+                        <div class="group-5-title">'.t("หมวดที่ 5. แผนการสอนและการประเมินผล").'</div>
+                        <div class="">'.display_form_show_tqf_3_category_5_1($nid_tqf_3 ,$node->nid).'</div>
+                        <div class="">'.display_form_show_tqf_3_category_5_2($nid_tqf_3).'</div>  
+                    </div>
+                    <div class="group-6">
+                        <div class="group-6-title">'.t("หมวดที่ 6. ทรัพยากรประกอบการเรียนการสอน").'</div>
+                        <div class="">'.display_form_show_tqf_3_category(6, 1, '1. ตำราและเอกสารหลัก', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(6, 2, '2. เอกสารและข้อมูลสำคัญ', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(6, 3, '3. เอกสารและข้อมูลแนะนำ', $nid_tqf_3).'</div>
+                    </div>
+                    <div class="group-7">
+                        <div class="group-7-title">'.t("หมวดที่ 7. การประเมินผลและปรับปรุงดำเนินการของรายวิชา").'</div>
+                        <div class="">'.display_form_show_tqf_3_category(7, 1, '1. กลยุทธ์การประเมินประสิทธิผลของรายวิชาโดยนักศึกษา', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(7, 2, '2. กลยุทธ์การประเมินการสอน', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(7, 3, '3. การปรับปรุงการสอน', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(7, 4, '4. การทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษาในรายวิชา', $nid_tqf_3).'</div>
+                        <div class="">'.display_form_show_tqf_3_category(7, 5, '5. การดำเนินการทบทวนและการวางแผนปรับปรุงประสิทธิผลของรายวิชา', $nid_tqf_3).'</div>
+                    </div>
+                </div>';
+
+            
+
+    return $output;
+}
+
+function display_view_addopen_subject_form($form_state , $variables) {
+    $form = array();
+
+    // get data variables
+    $nid = $variables['build_info']['args'][0];
+    
+    // form value
+    $form['open_subject'] = array(
+        '#type' => 'value',
+        '#value' => $nid,
+    );
+
+    // form submit
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('เพิ่ม มคอ.3')
+    );
+
+  return $form;
+}
+
+function display_view_addopen_subject_form_submit($form_id, &$form_state) {
+    $nid = $form_state['values']['open_subject'];
+
+    $form_state['redirect'] = 'node/'.$nid.'/add-tqf3';
+}
+
+function displat_form_credit($nid) {
+    $output = '';
+
+    $node = node_load($nid);
+
+    if (isset($node->field_subjects_time['und'])) {
+        $output .= '<div">
+                        '.$node->field_subjects_credit['und'][0]['value'].'
+                        ('.$node->field_subjects_time['und'][0]['value'].')
+                    </div>';
+
+    }
+    else {
+        $subjects_credit = '';
+        if (isset($node->field_subjects_credit['und'])) {
+            $subjects_credit = $node->field_subjects_credit['und'][0]['value'];
+        }
+        $subjects_theory = '';
+        if (isset($node->field_subjects_theory['und'])) {
+            $subjects_theory =  $node->field_subjects_theory['und'][0]['value'];
+        }
+        $subjects_practice = '';
+        if (isset($node->field_subjects_practice['und'])) {
+            $subjects_practice = $node->field_subjects_practice['und'][0]['value'];
+        }
+        $subjects_research = '';
+        if (isset($node->field_subjects_research['und'])) {
+            $subjects_research = $node->field_subjects_research['und'][0]['value'];
+        }
+        $output .= '<div>
+                        '.$subjects_credit.' ('.$subjects_theory.' - '.$subjects_practice.' - '.$subjects_research.')
+                    </div>';
+    }
+
+    return $output;
+}
+
+/***********
+* function *
+***********/
+function display_form_add_detail_tqf_3($nid_tqf_3, $nid) {
+    $output = '';
+
+    if (isset($nid_tqf_3)) {
+        $output .= '<div class="add-detail-title">'.t("เพิ่มรายละเอียดของรายวิชา (มคอ.3)").'</div>';
+
+        $output .= display_form_add_detail_tqf_3_link(2, 1, 'จุดมุ่งหมายของรายวิชา', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(2, 2, 'วัตถุประสงค์ในการพัฒนา / ปรับปรุงรายวิชา', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(3, 1, 'คำอธิบายรายวิชา', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(3, 2, 'จำนวนชั่วโมงที่ใช้ต่อภาคการศึกษา', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(3, 3, 'จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษาและแนะนำทางวิชาการแก่นักศึกษาเป็นรายบุคคล', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(4, 1, 'คุณธรรมจริยธรรม', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(4, 2, 'ความรู้', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(4, 3, 'ทักษะทางปัญญา', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(4, 4, 'ทักษะความสัมพันธ์ระหว่างบุคคลและความรับผิดชอบ', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(4, 5, 'ทักษะการวิเคราะห์เชิงตัวเลข การสื่อสาร และการใช้เทคโนโลยีสารสนเทศ', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link_5_1($nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link_5_2($nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(6, 1, 'ตำราและเอกสารหลัก', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(6, 2, 'เอกสารและข้อมูลสำคัญ', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(6, 3, 'เอกสารและข้อมูลแนะนำ', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(7, 1, 'กลยุทธ์การประเมินประสิทธิผลของรายวิชาโดยนักศึกษา', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(7, 2, 'กลยุทธ์การประเมินการสอน', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(7, 3, 'การปรับปรุงการสอน', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(7, 4, 'การทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษาในรายวิชา', $nid_tqf_3, $nid);
+        $output .= display_form_add_detail_tqf_3_link(7, 5, 'การดำเนินการทบทวนและการวางแผนปรับปรุงประสิทธิผลของรายวิชา', $nid_tqf_3, $nid);
+
+    }
+
+    return $output;
+}
+
+function display_form_add_detail_tqf_3_link($group, $sub_group, $text_link, $nid_tqf_3, $nid) {
+    $output = '';
+
+    $type = 'tqf_3_category_'.$group.'_'.$sub_group;
+    $nid_node = 'nid_tqf_3_category_'.$group.'_'.$sub_group;
+    $add_content = 'node/add/tqf-3-category-'.$group.'-'.$sub_group;
+
+    $query = db_select('field_data_field_tqf_3_ref', 'i');
+    $result = $query
+                ->fields('i', array('entity_id'))
+                ->condition('i.field_tqf_3_ref_nid', $nid_tqf_3, '=')
+                ->condition('i.bundle', $type, '=')
+                ->execute();
+
+    $nid_node = null;
+    while ($entity_id = $result->fetchColumn()) {
+        $nid_node = $entity_id;
+    }
+
+    if (!isset($nid_node)) {
+        $output .= '<div>'.l($text_link, $add_content.'/'.$nid_tqf_3, array('query'=>array('destination'=>'node/'.$nid))).'</div>';
+    }
+
+    return $output;
+}
+
+function display_form_add_detail_tqf_3_link_5_1($nid_tqf_3, $nid) {
+    $output = '';
+
+    $output .= '<div>'.l(t("แผนการสอน"), 'node/add/tqf-3-category-5-1/'.$nid_tqf_3, array('query'=>array('destination'=>'node/'.$nid))).'</div>';
+
+    return $output;
+}
+
+function display_form_add_detail_tqf_3_link_5_2($nid_tqf_3, $nid) {
+    $output = '';
+
+    $output .= '<div>'.l(t("แผนการประเมินผลการเรียนรู้"), 'node/add/tqf-3-category-5-2/'.$nid_tqf_3, array('query'=>array('destination'=>'node/'.$nid))).'</div>';
+
+    return $output;
+}
+
+function display_form_show_tqf_3_category($group, $sub_group, $text_link, $nid) {
+    $output = '';
+
+    $str = 'tqf_3_category_'.$group.'_'.$sub_group;
+    
+    $query = db_select('field_data_field_tqf_3_ref', 'i');
+    $result = $query
+                ->fields('i', array('entity_id'))
+                ->condition('i.field_tqf_3_ref_nid', $nid, '=')
+                ->condition('i.bundle', $str, '=')
+                ->execute();
+
+    $nid_tqf_3_category = null;
+    while ($entity_id = $result->fetchColumn()) {
+        $nid_tqf_3_category .= $entity_id;
+    }
+
+    if (isset($nid_tqf_3_category)) {
+        $node_tqf_3_category = node_load($nid_tqf_3_category);
+        $output .= '<div class="group-sub-title">'.t($text_link).'</div>
+                    <div>'.views_embed_view($str, 'default', $node_tqf_3_category->nid).'</div>';
+    }
+
+    return $output;
+}
+
+function display_form_show_tqf_3_category_5_1($nid_tqf_3, $nid) {
+    $output = '';
+
+    $output .= '';
+    $output .= '<div class="group-sub-title">'.t("1. แผนการสอน").'</div>';
+
+    $query = db_select('field_data_field_tqf_3_ref', 'i');
+    $result = $query
+                ->fields('i', array('entity_id'))
+                ->condition('i.field_tqf_3_ref_nid', $nid_tqf_3, '=')
+                ->condition('i.bundle', 'tqf_3_category_5_1', '=')
+                ->execute();
+
+    $rows = array();
+    while ($entity_id = $result->fetchColumn()) {
+
+        $node = node_load($entity_id);
+
+        if (isset($node->field_final['und'])) {
+
+            $final = taxonomy_term_load($node->field_final['und'][0]['tid'])->name;
+
+            $rows[] = array(
+                array('class'=>'v-1', 'data'=>$node->field_week['und'][0]['value']),
+                array('class'=>'v-7', 'data'=>$final, 'colspan'=>4),
+                array('class'=>'v-6', 'data'=>l(t("แก้ไข"), 'node/'.$node->nid.'/edit-tqf-3-category-5-1')),
+            );
+        }
+        else {
+            $rows[] = array(
+                array('class'=>'v-1', 'data'=>$node->field_week['und'][0]['value']),
+                array('class'=>'v-2', 'data'=>$node->field_title_detail['und'][0]['value']),
+                array('class'=>'v-3', 'data'=>$node->field_hour['und'][0]['value']),
+                array('class'=>'v-4', 'data'=>$node->field_teaching_activities['und'][0]['value']),
+                array('class'=>'v-5', 'data'=>t("หมายเหตุ")),
+                array('class'=>'v-6', 'data'=>l(t("แก้ไข"), 'node/'.$node->nid.'/edit-tqf-3-category-5-1')),
+            );
+        }
+
+    }
+
+    $header = array(
+        array('class'=>'header-1', 'data'=>t("สัปดาห์ที่")),
+        array('class'=>'header-2', 'data'=>t("หัวข้อ / รายละเอียด")),
+        array('class'=>'header-3', 'data'=>t("จำนวนชั่วโมง")),
+        array('class'=>'header-4', 'data'=>t("กิจกรรมการเรยนการสอน สื่อที่ใช้")),
+        array('class'=>'header-5', 'data'=>t("ผู้สอน")),
+        array('class'=>'header-6', 'data'=>t("")),
+    );
+
+    $output .= '<div class="table-5-1">'.theme('table', array('header'=>$header, 'rows'=>$rows)).'</div>';
+
+    return $output;
+}
+
+function display_form_show_tqf_3_category_5_2($nid_tqf_3) {
+    $output = '';
+
+    $output .= '<div class="group-sub-title">'.t("2. แผนการประเมินผลการเรียนรู้").'</div>
+                <div>'.views_embed_view('tqf_3_category_5_2', 'default', $nid_tqf_3).'</div>';
+    
+
+    return $output;
+}
+
+function display_form_prerequisite_list($nid) {
+    $output = '';
+
+    $query = db_select('field_data_field_prerequisite_ref', 'a');
+    $result = $query
+                ->fields('a', array('field_prerequisite_ref_nid'))
+                ->condition('a.entity_id', $nid, '=')
+                ->condition('a.bundle', 'subjects', '=')
+                ->execute();
+
+    $check = false;
+    while ($entity_id = $result->fetchColumn()) {
+        $check = true;
+    }
+
+    if ($check) {
+        $output .= '<div><b>'.t("รายวิชาที่ต้องเรียนก่อน : ").'</b></div>';
+    }
+
+    $query2 = db_select('field_data_field_prerequisite_ref', 'b');
+    $result2 = $query2
+                ->fields('b', array('field_prerequisite_ref_nid'))
+                ->condition('b.entity_id', $nid, '=')
+                ->condition('b.bundle', 'subjects', '=')
+                ->execute();
+
+    while ($entity_id2 = $result2->fetchColumn()) {
+
+        $prerequisite = node_load($entity_id2);
+        $output .= '<div class="prerequisite">'.$prerequisite->field_subjects_id['und'][0]['value'].'&nbsp;&nbsp;'.$prerequisite->field_subjects_name_th['und'][0]['value'].'</div>';
+    }
+
+    return $output;
+}
+function display_form_add_subjects_group_link($nid) {
+    $output = '';
+        if (user_access('create subjects_group content')) {
+            $output .= l(t('เพิ่มกลุ่มวิชา'), 'node/'.$nid.'/add-subjects-group');
+        }
+
+    return $output;
+}
+
+function display_form_add_sub_subjects_group_link($nid) {
+    $output = '';
+        if (user_access('create sub_subjects_group content')) {
+            $output .= l(t('เพิ่มวิชาย่อย'), 'node/'.$nid.'/add-sub-subjects-group');
+        }
+
+    return $output;
+}
+
+function display_form_add_subject_property_link($nid) {
+    $output = '';
+        if (user_access('create subject_property content')) {
+            $output .= l(t('เพิ่มแขนงวิชา'), 'node/'.$nid.'/add-subject-property');
+        }
+
+    return $output;
+}
+
+function display_form_concerned_subjects_link($nid) {
+    $output = '';
+    $query = db_select('field_data_field_subjects_ref', 'a');
+    $result = $query
+                ->fields('a', array('entity_id'))
+                ->condition('a.entity_id', $nid, '=')
+                ->execute();
+    $count = false;
+    while ($entity_id = $result->fetchColumn()) {
+        $count = true;
+    }
+
+    $query2 = db_select('field_data_field_all_subject_group_ref', 'b');
+    $result2 = $query2
+                ->fields('b', array('entity_id'))
+                ->condition('b.field_all_subject_group_ref_nid', $nid, '=')
+                ->execute();
+
+    while ($entity_id2 = $result2->fetchColumn()) {
+        $count = true;
+    }
+
+    $query3 = db_select('field_data_field_subjects_detail', 'c');
+    $result3 = $query3
+                ->fields('c', array('entity_id'))
+                ->condition('c.entity_id', $nid, '=')
+                ->execute();
+
+    while ($entity_id3 = $result3->fetchColumn()) {
+        $count = true;
+    }
+
+    if ($count) {
+        $output .= l(t('แสดง'), 'node/'.$nid.'/concerned-subjects');
+    }
+
+    return $output;
+}
+
+function display_form_concerned_subjects_edit_link($nid) {
+    $output = '';
+
+    if (user_access('create subjects_group content')) {
+        $output .= l(t('แก้ไข'), 'node/'.$nid.'/edit-subjects-group');
+    }
+
+    return $output;
+}
+
+function display_view_curriculum_page_form($nid) {
+    $output = '';
+
+    $query = db_select('field_data_field_curriculum_ref', 'i');
+    $result = $query
+                ->fields('i', array('entity_id'))
+                ->condition('i.field_curriculum_ref_nid', $nid, '=')
+                ->condition('i.bundle', 'subjects_category', '=')
+                ->execute();
+
+    while ($entity_id = $result->fetchColumn()) {
+        $subjects_category = node_load($entity_id);
+
+        $subjects_category_total_credit = '';
+        if (isset($subjects_category->field_total_credit['und'])) {
+            $subjects_category_total_credit = $subjects_category->field_total_credit['und'][0]['value'].' '.t("หน่วยกิต");
+        }
+
+        $rows[] = array(
+            array('class'=>'header-1', 'data'=>$subjects_category->title),
+            array('class'=>'header-3', 'data'=>$subjects_category_total_credit),
+            array('class'=>'header-2', 'data'=>display_form_add_subjects_group_link($subjects_category->nid), 'colspan'=>2),
+            array('class'=>'header-2', 'data'=>display_form_concerned_subjects_edit_link($subjects_category->nid)),
+            array('class'=>'header-2', 'data'=>display_form_concerned_subjects_link($subjects_category->nid)),
+        );
+
+        $query2 = db_select('field_data_field_subjects_category_ref', 'r');
+        $result2 = $query2
+                    ->fields('r', array('entity_id'))
+                    ->condition('r.field_subjects_category_ref_nid', $subjects_category->nid, '=')
+                    ->condition('r.bundle', 'subjects_group', '=')
+                    ->execute();
+
+        while ($entity_id2 = $result2->fetchColumn()) {
+            $subjects_group = node_load($entity_id2);
+
+            $subjects_group_total_credit = '';
+            if (isset($subjects_group->field_total_credit['und'])) {
+                $subjects_group_total_credit = $subjects_group->field_total_credit['und'][0]['value'].' '.t("หน่วยกิต");
+            }
+
+            $rows[] = array(
+                array('class'=>'in-2', 'data'=>'<b>'.$subjects_group->title.'</b>'),
+                array('class'=>'in-5', 'data'=>$subjects_group_total_credit),
+                array('class'=>'in-3', 'data'=>display_form_add_sub_subjects_group_link($subjects_group->nid), 'colspan'=>2),
+                array('class'=>'in-3', 'data'=>display_form_concerned_subjects_edit_link($subjects_group->nid)),
+                array('class'=>'in-3', 'data'=>display_form_concerned_subjects_link($subjects_group->nid)),
+            );
+
+            $query2_1 = db_select('field_data_field_subjects_group_ref', 'b');
+            $result2_1 = $query2_1
+                        ->fields('b', array('entity_id'))
+                        ->condition('b.field_subjects_group_ref_nid', $subjects_group->nid, '=')
+                        ->condition('b.bundle', 'sub_subjects_group', '=')
+                        ->execute();
+
+            while ($entity_id2_1 = $result2_1->fetchColumn()) {
+                $sub_subjects_group = node_load($entity_id2_1);
+
+                $sub_subjects_group_total_credit = '';
+                if (isset($sub_subjects_group->field_total_credit['und'])) {
+                    $sub_subjects_group_total_credit = $sub_subjects_group->field_total_credit['und'][0]['value'].' '.t("หน่วยกิต");
+                }
+
+                $rows[] = array(
+                    array('class'=>'in-4', 'data'=>'<b>'.$sub_subjects_group->title.'</b>'),
+                    array('class'=>'in-5', 'data'=>$sub_subjects_group_total_credit, 'colspan'=>2),
+                    array('class'=>'in-3', 'data'=>display_form_add_subject_property_link($sub_subjects_group->nid)),
+                    array('class'=>'in-3', 'data'=>display_form_concerned_subjects_edit_link($sub_subjects_group->nid)),
+                    array('class'=>'in-3', 'data'=>display_form_concerned_subjects_link($sub_subjects_group->nid)),
+                );
+
+            }
+        }
+    }
+
+    $output .= '<div class="curriculum-structure">
+                    '.theme("table", array("rows"=>$rows)).'
+                </div>';
+
+    return $output;
+}

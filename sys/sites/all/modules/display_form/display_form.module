@@ -1,0 +1,1283 @@
+<?php
+/**
+ * @file display_form.module
+ * TODO: Enter file description here.
+ */
+
+/************************
+* Implements hook_theme *
+************************/
+function display_form_theme($existing, $type, $theme, $path) {
+    return array(
+        'curriculum_concerned_subjects_form' => array(
+            'render element' => 'form',
+        ),
+
+        'curriculum_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'subjects_category_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'subjects_group_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'sub_subjects_group_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'subjects_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'subject_property_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'open_subject_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_2_1_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_2_2_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_3_1_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_3_2_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_3_3_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_4_1_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_4_2_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_4_3_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_4_4_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_4_5_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_5_1_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_5_2_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_6_1_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_6_2_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_6_3_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_7_1_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_7_2_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_7_3_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_7_4_node_form' => array(
+            'render element' => 'form',
+        ),
+
+        'tqf_3_category_7_5_node_form' => array(
+            'render element' => 'form',
+        ),
+
+    );
+
+}
+
+/*****************
+* function theme *
+*****************/
+function theme_open_subject_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("เปิดรายวิชา").'</div>
+                    <div class="">'.drupal_render($form['field_subject_ref']).'</div>
+                    <div class="">'.drupal_render($form['field_curriculum_ref']).'</div>
+                    <div class="">'.drupal_render($form['field_teacher_ref']).'</div>
+                    <div class="">'.drupal_render($form['field_semester']).'</div>
+                    <div class="">'.drupal_render($form['field_school_year']).'</div>
+                    <div class="">'.drupal_render($form['field_class']).'</div>
+                    <div class="">'.drupal_render($form['field_level']).'</div>
+                    <div class="">'.drupal_render($form['field_study_locations']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden">'.drupal_render($form['field_updata_time_open_subject']).'</div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_2_1_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("จุดมุ่งหมายของรายวิชา").'</div>
+                    <div class="">'.drupal_render($form['field_aim_subject']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_2_2_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("วัตถุประสงค์ในการพัฒนา / ปรับปรุงรายวิชา").'</div>
+                    <div class="">'.drupal_render($form['field_aim_develop']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_3_1_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("คำอธิบายรายวิชา").'</div>
+                    <div class="">'.drupal_render($form['body']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_3_2_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("จำนวนชั่วโมงที่ใช้ต่อภาคการศึกษา").'</div>
+                    <div class="">'.drupal_render($form['field_describe']).'</div>
+                    <div class="">'.drupal_render($form['field_teaching']).'</div>
+                    <div class="">'.drupal_render($form['field_apprentice']).'</div>
+                    <div class="">'.drupal_render($form['field_self_study']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_3_3_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษาและแนะนำทางวิชาการแก่นักศึกษาเป็นรายบุคคล").'</div>
+                    <div class="">'.drupal_render($form['body']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_4_1_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("คุณธรรมจริยธรรม").'</div>
+                    <div class="">'.drupal_render($form['field_learning']).'</div>
+                    <div class="">'.drupal_render($form['field_teaching_methods']).'</div>
+                    <div class="">'.drupal_render($form['field_evaluation_methods']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_4_2_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("ความรู้").'</div>
+                    <div class="">'.drupal_render($form['field_learning']).'</div>
+                    <div class="">'.drupal_render($form['field_teaching_methods']).'</div>
+                    <div class="">'.drupal_render($form['field_evaluation_methods']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_4_3_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("ทักษะทางปัญญา").'</div>
+                    <div class="">'.drupal_render($form['field_learning']).'</div>
+                    <div class="">'.drupal_render($form['field_teaching_methods']).'</div>
+                    <div class="">'.drupal_render($form['field_evaluation_methods']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_4_4_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("ทักษะความสัมพันธ์ระหว่างบุคคลและความรับผิดชอบ").'</div>
+                    <div class="">'.drupal_render($form['field_learning']).'</div>
+                    <div class="">'.drupal_render($form['field_teaching_methods']).'</div>
+                    <div class="">'.drupal_render($form['field_evaluation_methods']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_4_5_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("ทักษะการวิเคราะห์เชิงตัวเลข การสื่อสาร และการใช้เทคโนโลยีสารสนเทศ").'</div>
+                    <div class="">'.drupal_render($form['field_learning']).'</div>
+                    <div class="">'.drupal_render($form['field_teaching_methods']).'</div>
+                    <div class="">'.drupal_render($form['field_evaluation_methods']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_5_1_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("แผนการสอน").'</div>
+                    <div class="">'.drupal_render($form['field_week']).'</div>
+                    <div class="">'.drupal_render($form['field_title_detail']).'</div>
+                    <div class="">'.drupal_render($form['field_hour']).'</div>
+                    <div class="">'.drupal_render($form['field_teaching_activities']).'</div>
+                    <div class="">'.drupal_render($form['field_final']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_5_2_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("แผนการประเมินผลการเรียนรู้").'</div>
+                    <div class="">'.drupal_render($form['field_learning_5_2']).'</div>
+                    <div class="">'.drupal_render($form['field_evaluation_methods_5_2']).'</div>
+                    <div class="">'.drupal_render($form['field_week_assessment']).'</div>
+                    <div class="">'.drupal_render($form['field_portion_assessment']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_6_1_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("ตำราและเอกสารหลัก").'</div>
+                    <div class="">'.drupal_render($form['field_main_book']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_6_2_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("เอกสารและข้อมูลสำคัญ").'</div>
+                    <div class="">'.drupal_render($form['field_archives']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_6_3_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("เอกสารและข้อมูลแนะนำ").'</div>
+                    <div class="">'.drupal_render($form['field_document']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_7_1_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("กลยุทธ์การประเมินประสิทธิผลของรายวิชาโดยนักศึกษา").'</div>
+                    <div class="">'.drupal_render($form['body']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_7_2_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("กลยุทธ์การประเมินการสอน").'</div>
+                    <div class="">'.drupal_render($form['body']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_7_3_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("การปรับปรุงการสอน").'</div>
+                    <div class="">'.drupal_render($form['body']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_7_4_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("การทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษาในรายวิชา").'</div>
+                    <div class="">'.drupal_render($form['body']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_tqf_3_category_7_5_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("การดำเนินการทบทวนและการวางแผนปรับปรุงประสิทธิผลของรายวิชา").'</div>
+                    <div class="">'.drupal_render($form['body']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"><div class="">'.drupal_render($form['field_tqf_3_ref']).'</div></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_curriculum_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+                    <div class="grid-1">
+                        <div class="grid-3">'.drupal_render($form['field_curriculum_id']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_curriculum_sum_unit']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_curriculum_name_th']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_curriculum_name_en']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_degree_full_name_th']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_degree_full_name_en']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_degree_sub_name_th']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_degree_sub_name_en']).'</div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-2">'.drupal_render($form['field_curriculum_improvement']).'</div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_subjects_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/sc-form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+                    <div class="grid-1">
+                        <div class="input-1">'.drupal_render($form['field_subjects_id']).'</div>
+                        <div class="input-1">'.drupal_render($form['field_subjects_name_th']).'</div>
+                        <div class="input-1">'.drupal_render($form['field_subjects_name_en']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_subjects_credit']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_subjects_theory']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_subjects_practice']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_subjects_research']).'</div>
+                        <div class="grid-3">'.drupal_render($form['field_subjects_time']).'</div>
+
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-2">'.drupal_render($form['field_subjects_ref']).'</div>
+                        <div class="input-2">'.drupal_render($form['field_prerequisite_ref']).'</div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="">'.drupal_render($form['field_subjects_explanation_th']).'</div>
+                    <div class="">'.drupal_render($form['field_subjects_explanation_en']).'</div>
+                    <div class="">'.drupal_render($form['field_subjects_explanation_other']).'</div>
+                    <div class="clearfix"></div>
+
+                </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden">
+                    <div class="">'.drupal_render($form['title']).'</div>
+                </div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_sub_subjects_group_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("กลุ่มวิชาย่อย").'</div>
+                    <div class="">'.drupal_render($form['field_subjects_group_ref']).'</div>
+                    <div class="">'.drupal_render($form['field_sub_subjects_group_number']).'</div>
+                    <div class="">'.drupal_render($form['field_sub_subjects_group_name']).'</div>
+                    <div class="">'.drupal_render($form['field_total_credit']).'</div>
+                    <div class="">'.drupal_render($form['field_subjects_detail']).'</div>
+                    <div class="">'.drupal_render($form['field_subjects_ref']).'</div>
+                    <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_subjects_group_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                    <div class="label-title">'.t("กลุ่มวิชา").'</div>
+                    <div class="">'.drupal_render($form['field_subjects_category_ref']).'</div>
+                    <div class="">'.drupal_render($form['field_subjects_group_number']).'</div>
+                    <div class="">'.drupal_render($form['field_subjects_group_name']).'</div>
+                    <div class="">'.drupal_render($form['field_total_credit']).'</div>
+                    <div class="">'.drupal_render($form['field_subjects_detail']).'</div>
+                    <div class="">'.drupal_render($form['field_subjects_ref']).'</div>
+                    <div class="clearfix"></div>
+
+                </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_curriculum_concerned_subjects_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/custom/hide-sidebar.css');
+
+    $form = $variables['form'];
+    $nid = $form['concerned_subjects']['#value'];
+    $title = node_load($nid);
+
+    drupal_set_title($title->title);
+    $output  = '';
+
+    $output .= display_form_subjects_group_page_form($nid);
+
+    return $output;
+}
+
+function theme_subjects_category_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                <div class="label-title">'.t("หมวดวิชา").'</div>
+                <div class="">'.drupal_render($form['field_curriculum_ref']).'</div>
+                <div class="">'.drupal_render($form['field_subjects_category_number']).'</div>
+                <div class="">'.drupal_render($form['field_subjects_category_name']).'</div>
+                <div class="">'.drupal_render($form['field_total_credit']).'</div>
+                <div class="">'.drupal_render($form['field_subjects_detail']).'</div>
+                <div class="">'.drupal_render($form['field_subjects_ref']).'</div>
+                <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+function theme_subject_property_node_form($variables) {
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/form-profile.css');
+    drupal_add_css(drupal_get_path('theme', 'omega').'/addhoc/960_12_col.css');
+
+    $form = $variables['form'];
+
+    $output  = '';
+
+    $output .= '<div class="profile-form-wrapper clearfix">
+
+                <div class="label-title">'.t("แขนงวิชา").'</div>
+                <div class="">'.drupal_render($form['field_all_subject_group_ref']).'</div>
+                <div class="">'.drupal_render($form['field_subject_property_name']).'</div>
+                <div class="">'.drupal_render($form['field_subjects_ref']).'</div>
+                <div class="clearfix"></div>
+
+              </div>';
+
+    $output .= '<div class="save-botton">
+                    '.drupal_render($form["actions"]["submit"]).'
+                    '.drupal_render($form["actions"]["preview"]).'
+                    '.drupal_render($form["actions"]["delete"]).'
+                </div>';
+
+    $output .= '
+                <div class="hidden"></div>
+                <div class="clearfix"></div>
+            ';
+
+    $output .= drupal_render_children($form);
+
+    return $output;
+}
+
+/***********
+* function *
+***********/
+function display_form_subjects_group_page_form($nid){
+    $output = '';
+
+    $node = node_load($nid);
+
+    if ($node->type == 'subjects_category') {
+        /*load curriculum content*/
+        $curriculum = node_load($node->field_curriculum_ref['und'][0]['nid']);
+    }
+    else if ($node->type == 'subjects_group') {
+        /*load subjects_category content*/
+        $subjects_category = node_load($node->field_subjects_category_ref['und'][0]['nid']);
+
+        /*load curriculum content*/
+        $curriculum = node_load($subjects_category->field_curriculum_ref['und'][0]['nid']);
+    }
+    else if ($node->type == 'sub_subjects_group') {
+        /*load subjects_group content*/
+        $subjects_group = node_load($node->field_subjects_group_ref['und'][0]['nid']);
+
+        /*load subjects_category content*/
+        $subjects_category = node_load($subjects_group->field_subjects_category_ref['und'][0]['nid']);
+
+        /*load curriculum content*/
+        $curriculum = node_load($subjects_category->field_curriculum_ref['und'][0]['nid']);
+    }
+
+
+    //$output .= '<div class=link-back>'.l(t("Back"),'node/'.$curriculum->nid).'</div>';
+
+    $subjects_detail = '';
+    if (isset($node->field_subjects_detail['und'])) {
+        $subjects_detail = $node->field_subjects_detail['und'][0]['value'];
+
+        $output .= '<div class="subjects-detail">
+                '.$subjects_detail.'
+                </div>';
+    }
+
+
+    $header = array(
+        array('class'=>'header-1', 'data'=>t("ลำดับ")),
+        array('class'=>'header-1', 'data'=>t("รหัสวิชา")),
+        array('class'=>'header-3', 'data'=>t("ชื่อรายวิชา")),
+        array('class'=>'header-1', 'data'=>t("หน่วยกิต")),
+    );
+
+    $rows = array();
+
+    $query2 = db_select('field_data_field_all_subject_group_ref', 'k');
+    $result2 = $query2
+                  ->fields('k', array('entity_id'))
+                  ->condition('k.field_all_subject_group_ref_nid', $nid, '=')
+                  ->orderBy('k.entity_id', 'ASC')
+                  ->execute();
+
+    $count = 1;
+    $check_row = false;
+    while ($entity_id2 = $result2->fetchColumn()) {
+        $check_row = true;
+        $subject_property = node_load($entity_id2);
+
+        /*load taxonomy*/
+        $subject_property_name = taxonomy_term_load($subject_property->field_subject_property_name['und'][0]['tid']);
+
+        $rows[] = array(
+            array('class'=>'header-2', 'data'=>$subject_property_name->name, 'colspan'=>3),
+            array('class'=>'header-2', 'data'=>display_form_concerned_subjects_edit_link($subject_property->nid)),
+        );
+
+        $query3 = db_select('field_data_field_subjects_ref', 'i');
+        $result3 = $query3
+                      ->fields('i', array('field_subjects_ref_nid'))
+                      ->condition('i.entity_id', $subject_property->nid, '=')
+                      ->orderBy('i.entity_id', 'ASC')
+                      ->execute();
+
+
+        $credit = null;
+        while ($entity_id3 = $result3->fetchColumn()) {
+            $subjects_group = node_load($entity_id3);
+
+            $subjects_group_link = $subjects_group->field_subjects_name_th['und'][0]['value'];
+
+            if (isset($subjects_group->field_subjects_time['und'][0]['value'])) {
+                $credit = $subjects_group->field_subjects_credit['und'][0]['value'].' ('
+                            .$subjects_group->field_subjects_time['und'][0]['value'].')';
+            }
+            else {
+                $credit = $subjects_group->field_subjects_credit['und'][0]['value'].' ('
+                        .$subjects_group->field_subjects_theory['und'][0]['value'].'-
+                        '.$subjects_group->field_subjects_practice['und'][0]['value'].'-
+                        '.$subjects_group->field_subjects_research['und'][0]['value'].')';
+            }
+
+            $destination = drupal_get_destination();
+            //$de = 'ffff';
+
+            $rows[] = array(
+                array('class'=>'row-1', 'data'=>$count),
+                array('class'=>'row-1', 'data'=>$subjects_group->field_subjects_id['und'][0]['value']),
+                array('class'=>'', 'data'=>l(t($subjects_group_link), 'node/'.$subjects_group->nid
+                                            , array('query' => array('des' => $curriculum->nid, 'des2' => $destination)))),
+                array('class'=>'row-1', 'data'=>$credit),
+            );
+
+            $count++;
+
+        }
+    }
+
+
+    $query = db_select('field_data_field_subjects_ref', 'i');
+    $result = $query
+                  ->fields('i', array('field_subjects_ref_nid'))
+                  ->condition('i.entity_id', $nid, '=')
+                  ->orderBy('i.entity_id', 'ASC')
+                  ->execute();
+
+    $count = 1;
+    $credit = null;
+    while ($entity_id = $result->fetchColumn()) {
+        $check_row = true;
+
+        $subjects_group = node_load($entity_id);
+
+        $subjects_group_link = $subjects_group->field_subjects_name_th['und'][0]['value'];
+
+        $subject_theory = '';
+        if (isset($subjects_group->field_subjects_theory['und'])) {
+            $subject_theory = $subjects_group->field_subjects_theory['und'][0]['value'];
+        }
+        $subject_practice = '';
+        if (isset($subjects_group->field_subjects_practice['und'])) {
+            $subject_practice = $subjects_group->field_subjects_practice['und'][0]['value'];
+        }
+        $subject_research = '';
+        if (isset($subjects_group->field_subjects_research['und'])) {
+            $subject_research = $subjects_group->field_subjects_research['und'][0]['value'];
+        }
+
+        if (isset($subjects_group->field_subjects_time['und'][0]['value'])) {
+            $credit = $subjects_group->field_subjects_credit['und'][0]['value'].' ('
+                        .$subjects_group->field_subjects_time['und'][0]['value'].')';
+        }
+        else {
+            $credit = $subjects_group->field_subjects_credit['und'][0]['value'].' ('
+                    .$subject_theory.' - '.$subject_practice.' - '.$subject_research.')';
+        }
+
+        $destination = drupal_get_destination();
+
+        $rows[] = array(
+            array('class'=>'row-1', 'data'=>$count),
+            array('class'=>'row-1', 'data'=>$subjects_group->field_subjects_id['und'][0]['value']),
+            array('class'=>'', 'data'=>l(t($subjects_group_link), 'node/'.$subjects_group->nid
+                                            , array('query' => array('des' => $curriculum->nid, 'des2' => $destination)))),
+            array('class'=>'row-1', 'data'=>$credit),
+        );
+
+        $count++;
+    }
+
+    if ($check_row) {
+        $output .= '<div class="subjects-group-page">
+                    '.theme("table", array("header"=>$header, "rows"=>$rows)).'
+                </div>';
+    }
+
+    return $output;
+}

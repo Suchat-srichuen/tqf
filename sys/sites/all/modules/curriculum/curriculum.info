@@ -1,0 +1,4 @@
+name = curriculum
+description = TODO: Description of module
+package = Suchat
+core = 7.x

@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file display_overlay.module
+ * TODO: Enter file description here.
+ */
+
+/**************************
+* function create overlay *
+**************************/
+function display_overlay_admin_paths_alter(&$paths){
+    $paths['node/*/add-subjects-category'] = TRUE;
+    $paths['node/*/add-subjects-group'] = TRUE;
+    $paths['node/*/add-sub-subjects-group'] = TRUE;
+    $paths['node/*/add-subject-property'] = TRUE;
+   
+}
